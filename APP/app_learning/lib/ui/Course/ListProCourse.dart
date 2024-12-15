@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../homepage/SearchPage.dart';
+
 class Course {
   final String title;
   final String price;
@@ -66,12 +68,20 @@ class _FroCourseState extends State<ListFroCourse> {
           icon: const Icon(Icons.arrow_back),
           onPressed: () => Navigator.pop(context),
         ),
-        title: const Text('Khóa học miễn phí'),
+        title: const Text('Khóa học Pro'),
         actions: [
           IconButton(
             icon: const Icon(Icons.search),
-            onPressed: () {},
-          ),
+            onPressed: () {
+              // Điều hướng đến trang SearchPage
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const SearchPage(),
+                ),
+              );
+            },
+          )
         ],
       ),
       body: Column(
