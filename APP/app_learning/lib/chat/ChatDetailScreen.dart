@@ -1,17 +1,23 @@
 import 'package:flutter/material.dart';
 
-class ChatDetailScreen extends StatelessWidget {
+class ChatDetailScreen extends StatefulWidget {
   final String name;
 
   ChatDetailScreen({required this.name});
 
+  @override
+  _ChatDetailScreenState createState() => _ChatDetailScreenState();
+}
+
+class _ChatDetailScreenState extends State<ChatDetailScreen> {
   final TextEditingController _messageController = TextEditingController();
+  final List<Map<String, dynamic>> _messages = []; // Danh sách tin nhắn
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(name),
+        title: Text(widget.name),
         actions: [
           IconButton(onPressed: () {}, icon: Icon(Icons.phone)),
           IconButton(onPressed: () {}, icon: Icon(Icons.video_call)),
@@ -20,19 +26,20 @@ class ChatDetailScreen extends StatelessWidget {
       ),
       body: Column(
         children: [
+          // Hiển thị các tin nhắn trong danh sách
           Expanded(
-            child: ListView(
-              children: [
-                MessageBubble(text: "xin chào!", isMe: true),
-                MessageBubble(text: "Xin chào!", isMe: false),
-                MessageBubble(text: "Khóa học...", isMe: true),
-                MessageBubble(
-                  text: "Alo",
-                  isMe: false,
-                ),
-              ],
+            child: ListView.builder(
+              itemCount: _messages.length,
+              itemBuilder: (context, index) {
+                final message = _messages[index];
+                return MessageBubble(
+                  text: message['text'],
+                  isMe: message['isMe'],
+                );
+              },
             ),
           ),
+          // Phần nhập tin nhắn
           Container(
             padding: EdgeInsets.all(8.0),
             decoration: BoxDecoration(
@@ -58,7 +65,7 @@ class ChatDetailScreen extends StatelessWidget {
                 IconButton(
                   icon: Icon(Icons.send, color: Colors.blue),
                   onPressed: () {
-                    // Handle message sending
+                    _sendMessage();
                   },
                 ),
               ],
@@ -67,6 +74,21 @@ class ChatDetailScreen extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  void _sendMessage() {
+    final text = _messageController.text;
+    if (text.isNotEmpty) {
+      setState(() {
+        // Thêm tin nhắn vào danh sách
+        _messages.add({
+          'text': text,
+          'isMe': true, // Tin nhắn từ người dùng
+        });
+      });
+
+      _messageController.clear(); // Xóa ô nhập tin nhắn sau khi gửi
+    }
   }
 }
 
