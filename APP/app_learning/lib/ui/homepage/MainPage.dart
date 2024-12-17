@@ -1,6 +1,7 @@
 import 'package:app_learning/chat/ChatListScreen.dart';
-import 'package:app_learning/ui/homepage/Course_detail.dart';
+import 'package:app_learning/ui/Course/MyCourse.dart';
 import 'package:app_learning/ui/homepage/HomePage.dart';
+import 'package:app_learning/ui/profile/mainprofile.dart';
 import 'package:flutter/material.dart';
 
 class Mainpage extends StatefulWidget {
@@ -20,9 +21,9 @@ class _MainPageState extends State<Mainpage> {
     pages = [
       const HomePage(),
       // const FreeCourse(),
-      const CourseDetail(),
+      MyCourse(),
       ChatListScreen(),
-      Container(color: Colors.yellow),
+      const ProfilePage(),
     ];
   }
 
